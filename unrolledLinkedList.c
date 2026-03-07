@@ -59,9 +59,9 @@ void insert(Page **firstPage, int element) {
 
   while (current != NULL) {
     for (int i = 0; i < NB_ELEM; i++) {
-      if (!(current->bitmap & (1ULL << i))) {
+      if (!(current->bitmap & (1 << i))) {
         current->element[i] = element;
-        current->bitmap |= (1ULL << i);
+        current->bitmap |= (1 << i);
         return;
       }
     }
