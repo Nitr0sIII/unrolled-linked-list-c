@@ -21,12 +21,12 @@ int main(int argc, char const *argv[]) {
   Page *first = constructorInit();
   __int8_t a = 0;
 
-  //printf("\n\n%u\n\n", a | (1ULL << 8));
+  // printf("\n\n%u\n\n", a | (1ULL << 8));
 
-  // insert(first, 5);
-  // insert(first, 85);
+  insert(first, 5);
+  insert(first, 85);
 
-  // printAllPage(first);
+  printAllPage(first);
   return 0;
 }
 
@@ -54,13 +54,13 @@ void insert(Page *firstPage, int element) {
     for (int i = 0; i < NB_ELEM; i++) {
       if (!(current->bitmap & (1ULL << i))) {
         current->element[i] = element;
-        current->bitmap = (current->bitmap | (1ULL << i));
+        current->bitmap |= (1ULL << i);
 
-        printf("Bitmap : %u", current->bitmap);
+        // printf("Bitmap : %u", current->bitmap);
         return;
       }
-      current = current->next;
     }
+    current = current->next;
   }
 }
 
