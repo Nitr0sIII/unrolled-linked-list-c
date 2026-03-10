@@ -1,6 +1,7 @@
 #include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
 
 #define NB_ELEM 8
 
@@ -12,27 +13,50 @@ struct Page {
   Page *next;
 };
 
+typedef struct Position {
+  int element;
+  uint8_t index;
+  Page *pageRef;
+} Position;
+
+typedef struct Occurences {
+  Position *founds;
+  int number;
+} Occurences;
+
 Page *constructorInit();
 void insert(Page **firstPage, int element);
+void removePosition(Page **firstPage, Position position);
+Occurences research(Page **firstPage, int element);
+void printPositions(Occurences occurences);
 void printAllPage(Page *first);
+void freeAllPages(Page *first);
 
 //////////////////////////////////////////////////////////////////////
 
 int main(int argc, char const *argv[]) {
+  printf("\n\n\n");
+
+  srand(time(NULL));
   Page *first = NULL;
 
-  insert(&first, 5);
-  insert(&first, 85);
-  insert(&first, 789);
-  insert(&first, 45);
-  insert(&first, 58);
-  insert(&first, 22);
-  insert(&first, 58);
-  insert(&first, 2201);
-  insert(&first, 5855);
-  insert(&first, 2278);
+  for (int i = 0; i < 15; i++) {
+    insert(&first, rand() % 11);
+  }
+
+  Occurences occ = research(&first, 5);
+
+  printPositions(occ);
 
   printAllPage(first);
+
+  removePosition(&first, occ.founds[0]);
+
+  printAllPage(first);
+  freeAllPages(first);
+
+  printf("\n\n\n");
+
   return 0;
 }
 
@@ -49,6 +73,8 @@ Page *constructorInit() {
 
   return tmpPage;
 }
+
+//////////////////////////////////////////////////////////////////////
 
 void insert(Page **firstPage, int element) {
   if (*firstPage == NULL) {
@@ -72,11 +98,77 @@ void insert(Page **firstPage, int element) {
   }
 }
 
+void removePosition(Page **firstPage, Position position) {
+  if (*firstPage == NULL) {
+    printf("Error : NULL firstPage");
+    return;
+  }
+
+  position.pageRef->element[position.index] = 0;
+  position.pageRef->bitmap ^= 1 << position.index;
+}
+
+Occurences research(Page **firstPage, int element) {
+  Occurences occurences;
+  occurences.number = 0;
+
+  if (*firstPage == NULL) {
+    printf("Error : NULL firstPage");
+    return occurences;
+  }
+
+  Position *founds = NULL;
+  Page *current = *firstPage;
+  int count = 0;
+
+  while (current != NULL) {
+    for (int i = 0; i < NB_ELEM; i++) {
+      if (current->bitmap & (1 << i)) {
+        if (current->element[i] == element) {
+          count++;
+          if (founds == NULL) {
+            founds = malloc(sizeof(Position));
+          } else {
+            founds = realloc(founds, count * sizeof(Position));
+          }
+
+          Position tmp = {tmp.element = element, tmp.index = i, tmp.pageRef = current};
+          founds[count - 1] = tmp;
+        }
+      }
+    }
+    current = current->next;
+  }
+
+  if (count == 0) {
+    printf("Alert : Element (%d) not found.\n\n", element);
+    return occurences;
+  }
+
+  occurences.founds = founds;
+  occurences.number = count;
+
+  return occurences;
+}
+
+//////////////////////////////////////////////////////////////////////
+
+void printPositions(Occurences occurences) {
+  int count = 0;
+  for (size_t i = 0; i < occurences.number; i++) {
+    printf("Position found :\n\n");
+    printf("Element : %d\n", occurences.founds[count].element);
+    printf("Bitmap Index : %d\n", occurences.founds[count].index);
+    printf("Adress : %p\n\n", occurences.founds[count].pageRef);
+    count++;
+  }
+}
+
 void printAllPage(Page *first) {
   Page *current = first;
   int currentPageIndex = 0;
   while (current != NULL) {
-    printf("Page %d\n", currentPageIndex);
+    printf("Page %d\n\n", currentPageIndex);
     for (int i = 0; i < NB_ELEM; i++) {
       if (current->bitmap & (1 << i)) {
         printf("Elem %d : %d\n", i, current->element[i]);
@@ -89,6 +181,8 @@ void printAllPage(Page *first) {
     currentPageIndex++;
   }
 }
+
+//////////////////////////////////////////////////////////////////////
 
 void freeAllPages(Page *first) {
   Page *current = first;
