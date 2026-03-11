@@ -51,4 +51,6 @@ void printUnrolledList(UnrolledList *list);
 
 void freeAllPages(Page *head);
 
+void normalListMain();
+
 #endif

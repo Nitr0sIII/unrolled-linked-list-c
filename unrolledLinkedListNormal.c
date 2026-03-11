@@ -14,20 +14,18 @@ int main(int argc, char const *argv[]) {
   SearchResult occ = research(&list, 9);
 
   printUnrolledList(&list);
-  /*
-    for (int i = 0; i < occ.number; i++) {
-      removePosition(&list, occ.founds[i]);
-    }
+  for (int i = 0; i < occ.number; i++) {
+    removePosition(&list, occ.founds[i]);
+  }
 
-    free(occ.founds);
+  free(occ.founds);
 
-    printUnrolledList(&list);
+  printUnrolledList(&list);
 
-    compact(&list);
-    printUnrolledList(&list);*/
+  compact(&list);
+  printUnrolledList(&list);
 
   freeAllPages(list.head);
 
   printf("\n\n");
-  return 0;
 }
