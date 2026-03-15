@@ -5,7 +5,7 @@ UnrolledList constructorListInit() {
   UnrolledList tmpList;
 
   tmpList.itemCount = 0;
-  tmpList.pageCount = 0;
+  tmpList.pageCount = 1;
   tmpList.pageCapacity = askPageCapacity();
   tmpList.head = constructorPageInit(tmpList.pageCapacity);
 
@@ -45,9 +45,6 @@ void insert(UnrolledList *list, int value) {
   // Create the first page if the list is still empty.
   if (list->head == NULL) {
     list->head = constructorPageInit(list->pageCapacity);
-    if (list->head == NULL) {
-      return;
-    }
     list->pageCount++;
   }
 
@@ -138,40 +135,33 @@ void compact(UnrolledList *list) {
     return;
   }
 
-  Page *current = list->head;
-  int moved;
+  Page *founder = list->head;
+  Page *writer = list->head;
+  int indexWriter = 0;
 
-  do {
-    moved = 0;
-    int isRefFound = 0;
-    current = list->head;
-    ElementLocation refHoleFound;
+  while (founder != NULL) {
+    for (int i = 0; i < list->pageCapacity; i++) {
+      if (founder->bitmap & (1 << i)) {
 
-    // Push values leftward into the first hole encountered.
-    while (current != NULL) {
-      for (int i = 0; i < list->pageCapacity; i++) {
-        if (!(current->bitmap & (1 << i))) {
-          if (!isRefFound) {
-            refHoleFound.pageRef = current;
-            refHoleFound.index = i;
-            isRefFound = 1;
-          }
-        } else if (isRefFound) {
-          refHoleFound.pageRef->values[refHoleFound.index] = current->values[i];
-          refHoleFound.pageRef->bitmap |= (1 << refHoleFound.index);
+        if (founder != writer || i != indexWriter) {
+          writer->values[indexWriter] = founder->values[i];
+          writer->bitmap |= (1 << indexWriter);
 
-          current->values[i] = INIT_VALUE;
-          current->bitmap &= ~(1 << i);
+          founder->values[i] = INIT_VALUE;
+          founder->bitmap &= ~(1 << i);
+        }
 
-          refHoleFound.index = i;
-          refHoleFound.pageRef = current;
-          moved = 1;
+        indexWriter++;
+        if (indexWriter == list->pageCapacity) {
+          writer = writer->next;
+          indexWriter = 0;
         }
       }
-      current = current->next;
     }
-  } while (moved);
+    founder = founder->next;
+  }
 
+  Page *current = list->head;
   Page *previous = NULL;
   current = list->head;
 
