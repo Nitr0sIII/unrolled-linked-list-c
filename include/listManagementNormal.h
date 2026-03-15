@@ -16,12 +16,12 @@ struct Page {
   Page *next;
 };
 
-typedef struct UnrolledList {
+typedef struct PagedBitmapList {
   int pageCapacity;
   int itemCount;
   int pageCount;
   Page *head;
-} UnrolledList;
+} PagedBitmapList;
 
 typedef struct ElementLocation {
   int value;
@@ -36,18 +36,18 @@ typedef struct SearchResult {
 
 //////////////////////////////////////////////////////////////////////
 
-UnrolledList constructorListInit();
+PagedBitmapList constructorListInit();
 Page *constructorPageInit(int pageCapacity);
 int askPageCapacity();
 
-void insert(UnrolledList *list, int value);
-void removeAtLocation(UnrolledList *list, ElementLocation position);
-void compact(UnrolledList *list);
+void insert(PagedBitmapList *list, int value);
+void removeAtLocation(PagedBitmapList *list, ElementLocation position);
+void compact(PagedBitmapList *list);
 
-SearchResult research(UnrolledList *list, int value);
+SearchResult research(PagedBitmapList *list, int value);
 
 void printLocations(SearchResult occurrences);
-void printUnrolledList(UnrolledList *list);
+void printPagedBitmapList(PagedBitmapList *list);
 
 void freeAllPages(Page *head);
 

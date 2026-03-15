@@ -1,8 +1,8 @@
 #include "../include/listManagementNormal.h"
 #include "../include/colorConsole.h"
 
-UnrolledList constructorListInit() {
-  UnrolledList tmpList;
+PagedBitmapList constructorListInit() {
+  PagedBitmapList tmpList;
 
   tmpList.itemCount = 0;
   tmpList.pageCount = 1;
@@ -41,7 +41,7 @@ int askPageCapacity() {
 
 //////////////////////////////////////////////////////////////////////
 
-void insert(UnrolledList *list, int value) {
+void insert(PagedBitmapList *list, int value) {
   // Create the first page if the list is still empty.
   if (list->head == NULL) {
     list->head = constructorPageInit(list->pageCapacity);
@@ -72,7 +72,7 @@ void insert(UnrolledList *list, int value) {
   }
 }
 
-void removeAtLocation(UnrolledList *list, ElementLocation position) {
+void removeAtLocation(PagedBitmapList *list, ElementLocation position) {
   if (list->head == NULL) {
     printf("Error : \"head\" pointer is NULL");
     return;
@@ -84,7 +84,7 @@ void removeAtLocation(UnrolledList *list, ElementLocation position) {
   list->itemCount--;
 }
 
-SearchResult research(UnrolledList *list, int value) {
+SearchResult research(PagedBitmapList *list, int value) {
   SearchResult occurrences;
   occurrences.founds = NULL;
   occurrences.number = 0;
@@ -129,7 +129,7 @@ SearchResult research(UnrolledList *list, int value) {
   return occurrences;
 }
 
-void compact(UnrolledList *list) {
+void compact(PagedBitmapList *list) {
   if (list->head == NULL) {
     printf("Error : \"head\" pointer is NULL");
     return;
@@ -196,7 +196,7 @@ void printLocations(SearchResult occurrences) {
   }
 }
 
-void printUnrolledList(UnrolledList *list) {
+void printPagedBitmapList(PagedBitmapList *list) {
   Page *current = list->head;
   int pageIndex = 0;
 

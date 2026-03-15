@@ -9,9 +9,9 @@ int main(int argc, char const *argv[]) {
   int a;
 
   // Build one typed list for each supported data type.
-  UnrolledList_int listInt = constructorListInit_int();
-  UnrolledList_char listChar = constructorListInit_char();
-  UnrolledList_float listFloat = constructorListInit_float();
+  PagedBitmapList_int listInt = constructorListInit_int();
+  PagedBitmapList_char listChar = constructorListInit_char();
+  PagedBitmapList_float listFloat = constructorListInit_float();
 
   // Insert random values to populate the three examples.
   for (int i = 0; i < 7; i++) {
@@ -22,7 +22,7 @@ int main(int argc, char const *argv[]) {
 
   //////////////////////////////////////////////////////////////////////
 
-  printUnrolledList_int(&listInt);
+  printPagedBitmapList_int(&listInt);
 
   // Remove every matching occurrence, then compact the list.
   SearchResult_int occInt = research_int(&listInt, 9);
@@ -33,11 +33,11 @@ int main(int argc, char const *argv[]) {
   free(occInt.founds);
   printf("Removed occ in List: \n");
 
-  printUnrolledList_int(&listInt);
+  printPagedBitmapList_int(&listInt);
 
   compact_int(&listInt);
   printf("Compacted List: \n");
-  printUnrolledList_int(&listInt);
+  printPagedBitmapList_int(&listInt);
 
   freeAllPages_int(listInt.head);
 
@@ -45,7 +45,7 @@ int main(int argc, char const *argv[]) {
 
   //////////////////////////////////////////////////////////////////////
 
-  printUnrolledList_char(&listChar);
+  printPagedBitmapList_char(&listChar);
 
   // Repeat the same workflow on the char-based list.
   SearchResult_char occChar = research_char(&listChar, 68);
@@ -56,11 +56,11 @@ int main(int argc, char const *argv[]) {
   free(occChar.founds);
   printf("Removed occ in List: \n");
 
-  printUnrolledList_char(&listChar);
+  printPagedBitmapList_char(&listChar);
 
   compact_char(&listChar);
   printf("Compacted List: \n");
-  printUnrolledList_char(&listChar);
+  printPagedBitmapList_char(&listChar);
 
   freeAllPages_char(listChar.head);
 
@@ -68,7 +68,7 @@ int main(int argc, char const *argv[]) {
 
   //////////////////////////////////////////////////////////////////////
 
-  printUnrolledList_float(&listFloat);
+  printPagedBitmapList_float(&listFloat);
 
   // Same demonstration again for the float-based list.
   SearchResult_float occFloat = research_float(&listFloat, 9.1);
@@ -78,11 +78,11 @@ int main(int argc, char const *argv[]) {
 
   free(occFloat.founds);
   printf("Removed occ in List: \n");
-  printUnrolledList_float(&listFloat);
+  printPagedBitmapList_float(&listFloat);
 
   compact_float(&listFloat);
   printf("Compacted List: \n");
-  printUnrolledList_float(&listFloat);
+  printPagedBitmapList_float(&listFloat);
 
   freeAllPages_float(listFloat.head);
 

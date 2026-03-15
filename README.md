@@ -1,4 +1,4 @@
-# Unrolled Linked List C
+# Paged Bitmap List C
 
 > 📌 **This documentation is available in two versions / Cette documentation est disponible en deux versions**
 > - **English**: See section [## English Version](#english-version) below
@@ -10,9 +10,9 @@
 
 ## 📝 Description
 
-**Unrolled Linked List** project written in C that demonstrates how to store values inside chained pages instead of using one node per element.
+**Paged Bitmap List** project written in C that demonstrates how to store values inside chained pages instead of using one node per element.
 
-This project implements an **unrolled linked list** data structure where each node, called a page, stores multiple values and a bitmap indicating which slots are occupied. It provides insertion, search, deletion by location, compaction, display, and memory cleanup.
+This project implements a **paged bitmap list** data structure where each node, called a page, stores multiple values and a bitmap indicating which slots are occupied. It provides insertion, search, deletion by location, compaction, display, and memory cleanup.
 
 The repository contains **two implementations**:
 - A **normal version** dedicated to `int`
@@ -20,7 +20,7 @@ The repository contains **two implementations**:
 
 ## 📐 Data Structure Principle
 
-### Unrolled Linked List
+### Paged Bitmap List
 
 Instead of storing one value per node like a classic linked list, an unrolled linked list stores several values inside each node:
 
@@ -68,11 +68,11 @@ In this project, the page capacity is chosen by the user between `1` and `8`, be
 ## 📂 Project Structure
 
 ```text
-unrolled-linked-list-c/
+paged-bitmap-list-c/
 ├── makefile                         # Build configuration
 ├── README.md                        # Documentation (this file)
-├── unrolledLinkedListNormal.c       # Demo program for the int-only version
-├── unrolledLinkedListDynamic.c      # Demo program for the generic version
+├── pagedBitmapListNormal.c       # Demo program for the int-only version
+├── pagedBitmapListDynamic.c      # Demo program for the generic version
 ├── include/
 │   ├── colorConsole.h               # ANSI color macros for terminal output
 │   ├── listManagementNormal.h       # Structures and prototypes for the normal version
@@ -84,7 +84,7 @@ unrolled-linked-list-c/
 
 ## ✨ Features
 
-- **Unrolled list implementation**: Store multiple values per node/page
+- **Paged bitmap list implementation**: Store multiple values per node/page
 - **Configurable page size**: Choose the number of elements per page from `1` to `8`
 - **Insertion**: Add values while reusing free slots when possible
 - **Search**: Retrieve every occurrence of a given value
@@ -105,8 +105,8 @@ unrolled-linked-list-c/
 
 ```bash
 make                         # Compile both executables
-./unrolledLinkedListNormal   # Run the int-only demo
-./unrolledLinkedListDynamic  # Run the generic typed demo
+./pagedBitmapListNormal   # Run the int-only demo
+./pagedBitmapListDynamic  # Run the generic typed demo
 make clean                   # Remove object files and executables
 ```
 
@@ -114,7 +114,7 @@ make clean                   # Remove object files and executables
 
 ### 1️⃣ Normal Version
 
-The `unrolledLinkedListNormal` program:
+The `pagedBitmapListNormal` program:
 - Creates a list of `int`
 - Asks the user for the page capacity
 - Inserts random integers
@@ -126,7 +126,7 @@ The `unrolledLinkedListNormal` program:
 
 ### 2️⃣ Dynamic Generic Version
 
-The `unrolledLinkedListDynamic` program:
+The `pagedBitmapListDynamic` program:
 - Creates three lists: `int`, `char`, and `float`
 - Asks the user for each page capacity
 - Inserts random values into each list
@@ -140,7 +140,7 @@ The `unrolledLinkedListDynamic` program:
 ### Example 1: Normal Version
 
 ```bash
-$ ./unrolledLinkedListNormal
+$ ./pagedBitmapListNormal
 
 Choose the number of elements in a page (1-8): 4
 
@@ -164,7 +164,7 @@ Page 1 : 1111
 ### Example 2: Dynamic Version
 
 ```bash
-$ ./unrolledLinkedListDynamic
+$ ./pagedBitmapListDynamic
 Choose the number of elements in a page (1-8): 3
 Choose the number of elements in a page (1-8): 3
 Choose the number of elements in a page (1-8): 3
@@ -216,7 +216,7 @@ This project is provided for exemple purposes.
 
 ## 📝 Description
 
-Projet de **Unrolled Linked List** écrit en C permettant de stocker plusieurs valeurs dans chaque nœud de la liste chaînée au lieu d’une seule.
+Projet de **Paged Bitmap List** écrit en C permettant de stocker plusieurs valeurs dans chaque nœud de la liste chaînée au lieu d’une seule.
 
 Ce projet implémente une structure de données de type **liste chaînée déroulée** dans laquelle chaque nœud, appelé page, contient plusieurs valeurs ainsi qu’un bitmap indiquant quelles cases sont occupées. Le programme fournit les opérations d’insertion, recherche, suppression par position, compaction, affichage et libération mémoire.
 
@@ -226,7 +226,7 @@ Le dépôt contient **deux implémentations** :
 
 ## 📐 Principe de la structure
 
-### Unrolled Linked List
+### Paged Bitmap List
 
 Au lieu de stocker une seule valeur par nœud comme une liste chaînée classique, une unrolled linked list stocke plusieurs valeurs dans chaque page :
 
@@ -274,11 +274,11 @@ Dans ce projet, la capacité d’une page est choisie par l’utilisateur entre 
 ## 📂 Structure du projet
 
 ```text
-unrolled-linked-list-c/
+paged-bitmap-list-c/
 ├── makefile                         # Configuration de compilation
 ├── README.md                        # Documentation (ce fichier)
-├── unrolledLinkedListNormal.c       # Programme de démonstration pour la version int
-├── unrolledLinkedListDynamic.c      # Programme de démonstration pour la version générique
+├── pagedBitmapListNormal.c       # Programme de démonstration pour la version int
+├── pagedBitmapListDynamic.c      # Programme de démonstration pour la version générique
 ├── include/
 │   ├── colorConsole.h               # Macros ANSI pour la coloration du terminal
 │   ├── listManagementNormal.h       # Structures et prototypes de la version normale
@@ -290,7 +290,7 @@ unrolled-linked-list-c/
 
 ## ✨ Fonctionnalités
 
-- **Implémentation d’unrolled list** : plusieurs valeurs stockées par page
+- **Implémentation d’une paged bitmap list** : plusieurs valeurs stockées par page
 - **Taille de page configurable** : choix du nombre d’éléments par page entre `1` et `8`
 - **Insertion** : ajout de valeurs en réutilisant les cases libres
 - **Recherche** : récupération de toutes les occurrences d’une valeur
@@ -311,8 +311,8 @@ unrolled-linked-list-c/
 
 ```bash
 make                         # Compile les deux exécutables
-./unrolledLinkedListNormal   # Lance la démo de la version int
-./unrolledLinkedListDynamic  # Lance la démo de la version générique typée
+./pagedBitmapListNormal   # Lance la démo de la version int
+./pagedBitmapListDynamic  # Lance la démo de la version générique typée
 make clean                   # Supprime les fichiers objets et les exécutables
 ```
 
@@ -320,7 +320,7 @@ make clean                   # Supprime les fichiers objets et les exécutables
 
 ### 1️⃣ Version normale
 
-Le programme `unrolledLinkedListNormal` :
+Le programme `pagedBitmapListNormal` :
 - Crée une liste de `int`
 - Demande à l’utilisateur la capacité des pages
 - Insère des entiers aléatoires
@@ -332,7 +332,7 @@ Le programme `unrolledLinkedListNormal` :
 
 ### 2️⃣ Version générique dynamique
 
-Le programme `unrolledLinkedListDynamic` :
+Le programme `pagedBitmapListDynamic` :
 - Crée trois listes : `int`, `char` et `float`
 - Demande une capacité de page pour chaque type
 - Insère des valeurs aléatoires dans chaque liste
@@ -346,7 +346,7 @@ Le programme `unrolledLinkedListDynamic` :
 ### Exemple 1 : Version normale
 
 ```bash
-$ ./unrolledLinkedListNormal
+$ ./pagedBitmapListNormal
 
 Choose the number of elements in a page (1-8): 4
 
@@ -370,7 +370,7 @@ Page 1 : 1111
 ### Exemple 2 : Version générique
 
 ```bash
-$ ./unrolledLinkedListDynamic
+$ ./pagedBitmapListDynamic
 Choose the number of elements in a page (1-8): 3
 Choose the number of elements in a page (1-8): 3
 Choose the number of elements in a page (1-8): 3
